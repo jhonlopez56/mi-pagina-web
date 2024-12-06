@@ -1,53 +1,56 @@
-// Paso 1. Declaración de Variables
-let num1 = 0; // Variable para el primer número
-let num2 = 0; // Variable para el segundo número
-let operacion = ""; // Variable para almacenar la operación matemática
+const formulario = document.querySelector('formulario');
+const nombre = document.querySelector('nombre');
+const mensaje = document.querySelector('mensaje');
+const enviar = document.querySelector('enviar');
+const errores = document.querySelector('errores');
+let mensajesErrores = [];
 
-// Paso 2. Función para realizar operaciones
-function realizarOperacion(num1, num2, operacion) {
-    if (operacion === "suma") {
-        return num1 + num2;
-    } else if (operacion === "resta") {
-        return num1 - num2;
-    } else if (operacion === "multiplicacion") {
-        return num1 * num2;
-    } else if (operacion === "division") {
-        if (num2 === 0) {
-            return "Error: No se puede dividir por cero.";
-        }
-        return num1 / num2;
+// Funciones
+function validar (evento) {
+    // Evitar que se envie el formulario
+    evento.preventDefault();
+
+    // Vacia los mensajesErrores antes de rellenarlo nuevamente
+    mensajesErrores = [];
+
+    // VALIDACIONES
+
+    // Nombre es obligatorio
+
+    if (nombre.value.trim().length === 0) {
+        mensajesErrores = mensajesErrores.concat('Nombre es un campo obligatorio');
+    }
+
+    // Nombre carácteres válidos
+
+    if (!/^[a-zA-Z0-9]*$/.exec(nombre.value.trim())) {
+        mensajesErrores = mensajesErrores.concat('Nombre no tiene carácteres válidos');
+    }
+
+
+
+    // Comprobamos que el mensaje tiene un mínimo de 10 carácteres
+
+    if (mensaje.value.trim().length < 10) {
+        mensajesErrores = mensajesErrores.concat('Mensaje demasiado corto');
+    }
+
+    // ENVIAR O MOSTRAR MENSAJES
+    if (mensajesErrores.length === 0) {
+        // Enviamos el formulario si no hay errores
+        formulario.submit();
     } else {
-        return "Error: Operación no válida.";
+        // Muestro los errores
+        errores.textContent = '';
+        mensajesErrores.forEach(function (mensaje) {
+            const miLi = document.createElement('li');
+            miLi.textContent = mensaje;
+            errores.appendChild(miLi);
+        });
     }
 }
 
-// Paso 4. Bucle para realizar múltiples operaciones
-let continuar = true; // Control para el bucle
+// Eventos
+formulario.addEventListener('submit', validar);
 
-while (continuar) {
-    // Simula la entrada del usuario (puedes usar prompt en un navegador)
-    num1 = parseFloat(prompt("Ingrese el primer número:"));
-    if (isNaN(num1)) {
-        console.log("Error: Debe ingresar un número válido.");
-        continue; // Vuelve al inicio del bucle
-    }
-
-    num2 = parseFloat(prompt("Ingrese el segundo número:"));
-    if (isNaN(num2)) {
-        console.log("Error: Debe ingresar un número válido.");
-        continue; // Vuelve al inicio del bucle
-    }
-
-    operacion = prompt(
-        "Ingrese la operación a realizar (suma, resta, multiplicacion, division) o escriba 'salir' para terminar:"
-    );
-
-    if (operacion.toLowerCase() === "salir") {
-        console.log("Gracias por usar la calculadora. ¡Adiós!");
-        continuar = false;
-    } else {
-        // Paso 3. Validaciones de datos y operaciones
-        const resultado = realizarOperacion(num1, num2, operacion.toLowerCase());
-        console.log('El resultado de la operación es: ' +resultado);
-    }
-}
+// Inicio

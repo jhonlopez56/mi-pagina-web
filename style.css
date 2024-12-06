@@ -49,8 +49,40 @@ nav a:hover {
 	font-size: 16px;
 	color: #000000;
 	line-height: 1.6;
+	text-align: justify;
 }
  
+#parrafo {
+	font-size: 16px;
+	color: #000000;
+	line-height: 1.6;
+	text-align: center;
+
+}
+
+.form_container{
+	width: 100%;
+	display: grid;
+}
+
+ul{
+
+	list-style: inside;
+	margin: auto;
+
+}
+li{
+	display:list-item;
+	margin-right: 10px;
+}
+
+label{
+	text-align: auto;
+	padding: auto;
+	margin-top: 30px;
+}
+
+
 footer {
 	background-color: #333;
 	color: white;
